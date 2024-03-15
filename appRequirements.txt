@@ -1,0 +1,13 @@
+資産管理ツール
+
+機能
+収支記録(収入、支出)
+カテゴリー別分析
+貯金額の設定
+
+・Tech stack
+Remix
+Panda css
+Prisma
+Vercel postgres
+

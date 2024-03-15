@@ -4,9 +4,16 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-} from "@remix-run/react";
+} from '@remix-run/react';
+import styles from './index.css?url';
+import { LinksFunction } from '@remix-run/node';
+import 'remixicon/fonts/remixicon.css';
+import Sidebar from './components/sidebar';
+import { css } from 'styled-system/css';
 
-export function Layout({ children }: { children: React.ReactNode }) {
+export const links: LinksFunction = () => [{ rel: 'stylesheet', href: styles }];
+
+export default function Root() {
   return (
     <html lang="en">
       <head>
@@ -16,14 +23,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        <div
+          className={css({ display: 'flex', height: '100vh', width: '100%' })}>
+          <Sidebar />
+          <div className={css({ bgColor: '#272525', width: '100%' })}>
+            <Outlet />
+          </div>
+        </div>
         <ScrollRestoration />
         <Scripts />
       </body>
     </html>
   );
-}
-
-export default function App() {
-  return <Outlet />;
 }
