@@ -34,18 +34,20 @@ export default function Layout() {
           </button>
         </Link>
 
-        <button
-          className={css({
-            cursor: 'pointer',
-            height: '3rem',
-            width: '8rem',
-            bgColor: { base: 'white', _hover: 'gray' },
-            borderRadius: '0.5rem',
-            fontSize: '1.5rem',
-            fontWeight: 'bold',
-          })}>
-          支出
-        </button>
+        <Link to="/asset/expenditure">
+          <button
+            className={css({
+              cursor: 'pointer',
+              height: '3rem',
+              width: '8rem',
+              bgColor: { base: 'white', _hover: 'gray' },
+              borderRadius: '0.5rem',
+              fontSize: '1.5rem',
+              fontWeight: 'bold',
+            })}>
+            支出
+          </button>
+        </Link>
       </div>
       <Outlet />
       {/* TODO: Validation */}
