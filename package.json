@@ -12,10 +12,13 @@
     "prepare": "panda codegen"
   },
   "dependencies": {
+    "@prisma/client": "^5.11.0",
     "@remix-run/node": "^2.8.1",
     "@remix-run/react": "^2.8.1",
     "@remix-run/serve": "^2.8.1",
+    "@vercel/postgres": "^0.7.2",
     "isbot": "^4.1.0",
+    "prisma": "^5.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "remixicon": "^4.2.0"
