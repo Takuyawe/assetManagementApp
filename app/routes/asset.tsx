@@ -1,6 +1,7 @@
+import { Link, Outlet } from '@remix-run/react';
 import { css } from '../../styled-system/css';
 
-export default function Index() {
+export default function Layout() {
   return (
     <div
       className={css({
@@ -8,6 +9,7 @@ export default function Index() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
+        rowGap: '2rem',
         height: '100%',
       })}>
       <div
@@ -17,18 +19,21 @@ export default function Index() {
           height: '5rem',
           width: '25rem',
         })}>
-        <button
-          className={css({
-            cursor: 'pointer',
-            height: '3rem',
-            width: '8rem',
-            bgColor: { base: 'white', _hover: 'gray' },
-            borderRadius: '0.5rem',
-            fontSize: '1.5rem',
-            fontWeight: 'bold',
-          })}>
-          収入
-        </button>
+        <Link to="/asset/income">
+          <button
+            className={css({
+              cursor: 'pointer',
+              height: '3rem',
+              width: '8rem',
+              bgColor: { base: 'white', _hover: 'gray' },
+              borderRadius: '0.5rem',
+              fontSize: '1.5rem',
+              fontWeight: 'bold',
+            })}>
+            収入
+          </button>
+        </Link>
+
         <button
           className={css({
             cursor: 'pointer',
@@ -42,6 +47,8 @@ export default function Index() {
           支出
         </button>
       </div>
+      <Outlet />
+      {/* TODO: Validation */}
     </div>
   );
 }
