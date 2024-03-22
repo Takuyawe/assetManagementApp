@@ -30,7 +30,19 @@ const Sidebar = () => {
             cursor: 'pointer',
           })}>
           <i
-            className={`ri-money-cny-circle-line ri-3x ${css({
+            className={`ri-add-circle-line ri-3x ${css({
+              color: { base: '#ffffff', _hover: '#6e6e6e' },
+            })}`}
+          />
+        </button>
+      </Link>
+      <Link to="/">
+        <button
+          className={css({
+            cursor: 'pointer',
+          })}>
+          <i
+            className={`ri-file-list-2-line ri-3x ${css({
               color: { base: '#ffffff', _hover: '#6e6e6e' },
             })}`}
           />

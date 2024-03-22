@@ -16,7 +16,7 @@ const Expenditure = () => {
           columnGap: '2rem',
         })}>
         <SelectCategory categories={EXPENDITURE_CATEGORIES} />
-        <InputAmount />
+        {/* <InputAmount /> */}
       </div>
     </Form>
   );

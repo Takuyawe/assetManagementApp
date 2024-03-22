@@ -18,12 +18,12 @@ model Income {
   id   Int    @id @default(autoincrement())
   date DateTime
   category String
-  amount Decimal
+  amount Int
 }
 
 model Expenditure {
   id   Int    @id @default(autoincrement())
   date DateTime
   category String
-  amount Decimal
+  amount Int
 }

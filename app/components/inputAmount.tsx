@@ -1,6 +1,11 @@
 import { css } from 'styled-system/css';
 
-const InputAmount = () => {
+type Props = {
+  inputAmount: number;
+  setInputAmount: (inputAmount: number) => void;
+};
+
+const InputAmount = ({ inputAmount, setInputAmount }: Props) => {
   return (
     <input
       className={css({
@@ -8,10 +13,16 @@ const InputAmount = () => {
         textAlign: 'center',
         fontSize: '1rem',
         fontWeight: 'bold',
+        borderRadius: '0.5rem',
       })}
       type="number"
+      step={10}
+      min={0}
+      value={inputAmount}
+      onChange={(e) => setInputAmount(Number(e.target.value))}
       name="amount"
       placeholder="金額"
+      required
     />
   );
 };
