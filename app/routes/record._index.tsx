@@ -1,21 +1,21 @@
 import { json } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
+import { Await, Link, useLoaderData, useNavigation } from '@remix-run/react';
+import { Suspense } from 'react';
+import { css } from 'styled-system/css';
 import { prisma } from '~/lib/prisma';
 
-export const loader = async () => {
-  const data = await prisma.income.findMany();
-  return json(data);
-};
-
 const Index = () => {
-  const data = useLoaderData<typeof loader>();
   return (
     <>
-      <ul>
-        {data.map((item) => (
-          <li key={item.id}>{item.amount}</li>
-        ))}
-      </ul>
+      {/* <div className={css({ color: 'white', fontSize: '2rem' })}>
+        {navigation.state === 'loading' ? 'Loading...' : sum}
+      </div> */}
+      {/* <Suspense fallback={<div>Loading...</div>}>
+        <Await errorElement={<div>Error</div>} resolve={data}>
+          {(data) => <div>{data[1].amount}</div>}
+        </Await>
+      </Suspense> */}
+      <Link to="/record/income">Income Data</Link>
     </>
   );
 };
