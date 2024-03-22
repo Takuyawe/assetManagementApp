@@ -36,7 +36,7 @@ const Sidebar = () => {
           />
         </button>
       </Link>
-      <Link to="/">
+      <Link to="/record">
         <button
           className={css({
             cursor: 'pointer',

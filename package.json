@@ -12,6 +12,8 @@
     "prepare": "panda codegen"
   },
   "dependencies": {
+    "@conform-to/react": "^1.0.5",
+    "@conform-to/zod": "^1.0.5",
     "@formkit/tempo": "^0.0.17",
     "@prisma/client": "^5.11.0",
     "@remix-run/node": "^2.8.1",
@@ -22,7 +24,8 @@
     "prisma": "^5.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "remixicon": "^4.2.0"
+    "remixicon": "^4.2.0",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@pandacss/dev": "^0.35.0",

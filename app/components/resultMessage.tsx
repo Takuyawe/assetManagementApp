@@ -1,14 +1,14 @@
 import { css } from 'styled-system/css';
 
-const ErrorMessage = ({ message }: { message: string }) => {
+const ResultMessage = (status: number, message: string) => {
   return (
     <div
       className={css({
-        height: '3rem',
-        width: '10rem',
-        bgColor: 'red',
+        height: '2rem',
+        width: '20rem',
+        bgColor: status === 201 ? 'green' : 'red',
         color: 'white',
-        fontSize: '0.75rem',
+        fontSize: '1.5rem',
         fontWeight: 'bold',
         display: 'grid',
         placeItems: 'center',
@@ -19,4 +19,4 @@ const ErrorMessage = ({ message }: { message: string }) => {
   );
 };
 
-export default ErrorMessage;
+export default ResultMessage;

@@ -1,18 +1,48 @@
+import { getFormProps, useForm } from '@conform-to/react';
+import { getZodConstraint, parseWithZod } from '@conform-to/zod';
 import { format } from '@formkit/tempo';
-import { ActionFunctionArgs, json } from '@remix-run/node';
+import { ActionFunctionArgs } from '@remix-run/node';
 import { Form, useActionData } from '@remix-run/react';
 import { useCallback, useEffect, useState } from 'react';
 import { css } from 'styled-system/css';
-import ErrorMessage from '~/components/errorMessage';
+import { z } from 'zod';
 import InputAmount from '~/components/inputAmount';
 import SelectCategory from '~/components/selectCategory';
 import { INCOME_CATEGORIES } from '~/consts';
 import { prisma } from '~/lib/prisma';
+// import ResultMessage from '~/components/resultMessage';
+import ErrorMessage from '~/components/errorMessage';
+
+// const schema = z.object({
+//   category: z.preprocess(
+//     (value) => (value === '' ? undefined : value),
+//     z.string({ required_error: 'カテゴリーは必須項目です' })
+//   ),
+//   amount: z.preprocess(
+//     (value) => (value === '' ? undefined : value),
+//     z.number({ required_error: '金額は必須項目です' })
+//   ),
+// });
+
+const schema = z.object({
+  category: z.string({ required_error: 'カテゴリーは必須項目です' }),
+  amount: z
+    .number({ required_error: '金額は必須項目です' })
+    .min(0, 'そんな金額はありません')
+    .max(10000, 'そんな大金あなたが手に入れるはずありません'),
+});
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
+  const submission = parseWithZod(formData, { schema });
+
+  if (submission.status !== 'success') {
+    return submission.reply();
+  }
+
   const date = new Date();
   format(date, 'medium', 'zh');
+
   try {
     const data = await prisma.income.create({
       data: {
@@ -22,18 +52,27 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       },
     });
     console.log(data);
-    return json({ message: '登録しました', status: 201 });
+    return submission.reply();
   } catch (error: unknown) {
     if (error instanceof Error) {
-      console.log(error.message);
-      return json({ message: 'エラーが発生しました', status: 500 });
+      return submission.reply();
     }
   }
 };
 
 const Income = () => {
   const [inputAmount, setInputAmount] = useState(0);
-  const actionData = useActionData<typeof action>();
+  const lastResult = useActionData<typeof action>();
+
+  const [form, fields] = useForm({
+    lastResult,
+    constraint: getZodConstraint(schema),
+    shouldValidate: 'onBlur',
+    shouldRevalidate: 'onInput',
+    onValidate({ formData }) {
+      return parseWithZod(formData, { schema });
+    },
+  });
 
   const handleBeforeunload = useCallback(
     (event: BeforeUnloadEvent) => {
@@ -53,7 +92,7 @@ const Income = () => {
 
   return (
     <>
-      <Form method="post">
+      <Form method="post" {...getFormProps(form)}>
         <div
           className={css({
             display: 'flex',
@@ -66,15 +105,46 @@ const Income = () => {
             className={css({
               display: 'flex',
               justifyContent: 'center',
-              height: '3rem',
+              height: '8rem',
               width: '25rem',
               columnGap: '2rem',
             })}>
-            <SelectCategory categories={INCOME_CATEGORIES} />
-            <InputAmount
-              inputAmount={inputAmount}
-              setInputAmount={setInputAmount}
-            />
+            <div
+              className={css({
+                display: 'flex',
+                flexDirection: 'column',
+                rowGap: '0.5rem',
+                height: '6rem',
+                alignItems: 'center',
+                justifyContent: 'center',
+              })}>
+              <SelectCategory
+                categories={INCOME_CATEGORIES}
+                fields={fields.category}
+              />
+              {fields.category.errors && (
+                <ErrorMessage message={fields.category.errors[0]} />
+              )}
+            </div>
+
+            <div
+              className={css({
+                display: 'flex',
+                flexDirection: 'column',
+                rowGap: '0.5rem',
+                height: '6rem',
+                alignItems: 'center',
+                justifyContent: 'center',
+              })}>
+              <InputAmount
+                inputAmount={inputAmount}
+                setInputAmount={setInputAmount}
+                fields={fields.amount}
+              />
+              {fields.amount.errors && (
+                <ErrorMessage message={fields.amount.errors[0]} />
+              )}
+            </div>
           </div>
           <button
             className={css({
@@ -93,9 +163,8 @@ const Income = () => {
           </button>
         </div>
       </Form>
-      {actionData && (
-        <ErrorMessage message={actionData.message} status={actionData.status} />
-      )}
+      {/* <ResultMessage /> */}
+      {/* {fields && <ResultMessage />} */}
     </>
   );
 };
