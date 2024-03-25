@@ -19,22 +19,24 @@ export default function Layout() {
           height: '5rem',
           width: '25rem',
         })}>
-        <Link to="/asset/income">
-          <button
-            className={css({
-              cursor: 'pointer',
-              height: '3rem',
-              width: '8rem',
-              bgColor: { base: 'white', _hover: 'gray' },
-              borderRadius: '0.5rem',
-              fontSize: '1.5rem',
-              fontWeight: 'bold',
-            })}>
-            収入
-          </button>
+        <Link
+          to="/asset/income"
+          unstable_viewTransition
+          className={css({
+            cursor: 'pointer',
+            height: '3rem',
+            width: '8rem',
+            bgColor: { base: 'white', _hover: 'gray' },
+            borderRadius: '0.5rem',
+            fontSize: '1.5rem',
+            fontWeight: 'bold',
+            display: 'grid',
+            placeItems: 'center',
+          })}>
+          収入
         </Link>
 
-        <Link to="/asset/expenditure">
+        <Link to="/asset/expenditure" unstable_viewTransition>
           <button
             className={css({
               cursor: 'pointer',

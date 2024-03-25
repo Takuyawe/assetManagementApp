@@ -24,7 +24,7 @@ const Sidebar = () => {
           })}`}
         />
       </button>
-      <Link to="/asset">
+      <Link to="/asset" unstable_viewTransition>
         <button
           className={css({
             cursor: 'pointer',
@@ -36,7 +36,7 @@ const Sidebar = () => {
           />
         </button>
       </Link>
-      <Link to="/record">
+      <Link to="/record" unstable_viewTransition>
         <button
           className={css({
             cursor: 'pointer',

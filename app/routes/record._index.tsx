@@ -10,12 +10,11 @@ const Index = () => {
       {/* <div className={css({ color: 'white', fontSize: '2rem' })}>
         {navigation.state === 'loading' ? 'Loading...' : sum}
       </div> */}
-      {/* <Suspense fallback={<div>Loading...</div>}>
-        <Await errorElement={<div>Error</div>} resolve={data}>
-          {(data) => <div>{data[1].amount}</div>}
-        </Await>
-      </Suspense> */}
-      <Link to="/record/income">Income Data</Link>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Link to="/record/income" className={css({ color: 'white' })}>
+          Income Data
+        </Link>
+      </Suspense>
     </>
   );
 };
